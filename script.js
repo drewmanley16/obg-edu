@@ -68,7 +68,73 @@ const branches = [
   {
     id: "venture-capital",
     title: "Venture Capital",
-    intro: "Assignment details for the Venture Capital branch will live here once you send them over."
+    intro:
+      "Build professional investment theses with clear recommendations, defensible data, and VC-style reasoning.",
+    themeClass: "venture-hero",
+    projects: [
+      {
+        type: "thesis",
+        title: "Investment Thesis - Perpetual DEX Competitor to Hyperliquid",
+        team: "Carsen + Josh",
+        subtitle: "Perp DEX Competitor Thesis",
+        objective:
+          "Hyperliquid currently holds near-monopoly dominance in the decentralized perpetual futures market. Select one competing perp DEX protocol and build a professional investment thesis on it, as if presenting to a VC fund.",
+        submit: [
+          "A written investment thesis document: PDF or Word Doc, 2-4 pages.",
+          "Minimum 5 on-chain or verifiable data points comparing your protocol to Hyperliquid.",
+          "A clear recommendation: invest, with your reasoning."
+        ],
+        sections: [
+          "What Is the Protocol: overview, founding team, chain, token, and how it works.",
+          "Utility: mechanics of the perp mechanism, liquidity model, fee structure, and token role.",
+          "Differentiation: what makes it unique in the perp DEX space and what it does better than Hyperliquid.",
+          "Comparables vs. Hyperliquid: side-by-side data table covering volume, TVL, OI, revenue, and active users.",
+          "Investment Thesis: entry rationale, value accrual, catalysts, risks, bull case, bear case, and recommendation.",
+          "Macro Reasoning: market trends, regulatory environment, CEX vs. DEX trajectory, and 1-3 year outlook."
+        ],
+        protocolSuggestions: ["dYdX v4", "GMX v2", "Drift Protocol", "Vertex Protocol", "Aevo", "RabbitX", "Ostium"],
+        dataSources: [
+          "DefiLlama",
+          "Dune Analytics",
+          "TokenTerminal",
+          "Messari",
+          "CoinGecko",
+          "Protocol-native dashboards"
+        ],
+        reminders: [
+          "Avoid hype language.",
+          "Back every claim with data.",
+          "Read the protocol's own docs before reading third-party commentary."
+        ]
+      },
+      {
+        type: "thesis",
+        title: "Solana vs. Ethereum: Long and Short Investment Thesis Project",
+        team: "Miles + Blake",
+        subtitle: "Long / Short Protocol Thesis",
+        objective:
+          "Compare Solana and Ethereum, then take a clear position: long one protocol and short the other. The analysis should evaluate both projects across multiple dimensions and conclude with a specific recommendation backed by data and reasoning.",
+        sections: [
+          "Protocol Overview and Fundamentals: founding team and key figures, launch date and chain specifications, technical overview, and current market position.",
+          "Utility and Mechanics: primary use cases, smart contract functionality, liquidity models and capital flows, fee structures and cost comparisons, and native token roles.",
+          "Differentiation and Competitive Moat: what makes each protocol unique and defensible, key advantages over competitors, shared similarities, and technological or network moats.",
+          "Macro and Market Analysis: market trends favoring each protocol, regulatory environment and headwinds, 1-3 year outlook for each ecosystem, and broader crypto adoption trends.",
+          "Investment Thesis: state whether you are long Solana and short Ethereum or vice versa; explain entry rationale, why now, value accrual, catalysts, risks, bull case, bear case, and final recommendation."
+        ],
+        evaluation: [
+          "Research depth.",
+          "Quality of reasoning.",
+          "Use of data to support claims.",
+          "Clarity of long and short positions.",
+          "Coverage of scalability, costs, transaction speed, institutional adoption, and smart contract functionality."
+        ],
+        reminders: [
+          "Take a clear long and short position.",
+          "Support the recommendation with data and reasoning.",
+          "Make the conclusion specific enough to be investment-useful."
+        ]
+      }
+    ]
   },
   {
     id: "research",
@@ -248,6 +314,10 @@ function listMarkup(items) {
 }
 
 function renderProjectBrief(project) {
+  if (project.type === "thesis") {
+    return renderThesisBrief(project);
+  }
+
   return `
     <article class="project-brief">
       <div class="project-heading">
@@ -285,6 +355,69 @@ function renderProjectBrief(project) {
       <section class="requirements-strip">
         <h3>Final Requirements</h3>
         ${listMarkup(project.requirements)}
+      </section>
+    </article>
+  `;
+}
+
+function renderThesisBrief(project) {
+  return `
+    <article class="project-brief thesis-brief">
+      <div class="project-heading">
+        <div>
+          <p class="eyebrow">${project.subtitle}</p>
+          <h2>${project.title}</h2>
+          <p>${project.objective}</p>
+        </div>
+        <div class="token-card">
+          <span>Team</span>
+          <strong>${project.team}</strong>
+          <small>VC Thesis</small>
+        </div>
+      </div>
+
+      <div class="research-grid">
+        ${
+          project.submit
+            ? `<section>
+                <h3>What to Submit</h3>
+                ${listMarkup(project.submit)}
+              </section>`
+            : ""
+        }
+        <section>
+          <h3>Required Sections</h3>
+          ${listMarkup(project.sections)}
+        </section>
+        ${
+          project.protocolSuggestions
+            ? `<section>
+                <h3>Protocol Suggestions</h3>
+                ${listMarkup(project.protocolSuggestions)}
+              </section>`
+            : ""
+        }
+        ${
+          project.dataSources
+            ? `<section>
+                <h3>Recommended Data Sources</h3>
+                ${listMarkup(project.dataSources)}
+              </section>`
+            : ""
+        }
+        ${
+          project.evaluation
+            ? `<section>
+                <h3>Evaluation Criteria</h3>
+                ${listMarkup(project.evaluation)}
+              </section>`
+            : ""
+        }
+      </div>
+
+      <section class="requirements-strip">
+        <h3>Keep in Mind</h3>
+        ${listMarkup(project.reminders)}
       </section>
     </article>
   `;

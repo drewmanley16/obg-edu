@@ -475,6 +475,13 @@ main {
     #ffffff;
 }
 
+.venture-hero {
+  background:
+    linear-gradient(135deg, rgba(103, 60, 140, 0.13), transparent 52%),
+    linear-gradient(315deg, rgba(224, 165, 40, 0.14), transparent 42%),
+    #ffffff;
+}
+
 .partner-row {
   display: flex;
   flex-wrap: wrap;
@@ -634,6 +641,18 @@ main {
 .token-card strong {
   color: var(--ink);
   font-size: 2rem;
+}
+
+.thesis-brief .token-card strong {
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.thesis-brief .token-card {
+  background:
+    linear-gradient(160deg, rgba(103, 60, 140, 0.12), rgba(224, 165, 40, 0.14)),
+    #fbfcfb;
+  border-color: rgba(103, 60, 140, 0.2);
 }
 
 .research-grid {
