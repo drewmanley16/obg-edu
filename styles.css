@@ -461,6 +461,13 @@ main {
     #ffffff;
 }
 
+.marketing-hero {
+  background:
+    linear-gradient(135deg, rgba(224, 165, 40, 0.18), transparent 52%),
+    linear-gradient(315deg, rgba(53, 103, 183, 0.12), transparent 42%),
+    #ffffff;
+}
+
 .partner-row {
   display: flex;
   flex-wrap: wrap;
@@ -530,6 +537,40 @@ main {
 }
 
 .idea-card p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.workflow-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.workflow-list article {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfb;
+}
+
+.workflow-list span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--green);
+  color: white;
+  font-weight: 800;
+}
+
+.workflow-list p {
   margin-bottom: 0;
   color: var(--muted);
   line-height: 1.5;

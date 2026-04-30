@@ -23,7 +23,47 @@ const branches = [
   {
     id: "marketing",
     title: "Marketing",
-    intro: "Assignment details for the Marketing branch will live here once you send them over."
+    intro:
+      "Operate as a 3-person team on one assigned crypto protocol and produce a coordinated content drop as if shipping live under OBG.",
+    themeClass: "marketing-hero",
+    roles: ["Editorial", "Creative", "Community & Growth"],
+    assignment: {
+      title: "Crypto Company Content Drop",
+      overview:
+        "OBG's marketing branch produces institutional-quality content. Your assignment is to work as a three-person team across Editorial, Creative, and Community & Growth on one assigned crypto protocol. The final product should feel coordinated, polished, and ready to ship under OBG.",
+      requirementsTitle: "What to Submit",
+      requirements: [
+        "Editorial: write a 600-800 word article about the company that matches OBG's writing style.",
+        "Editorial: include a one-paragraph version that captures the main point, like the part someone would screenshot.",
+        "Editorial: write a three-tweet thread where tweet one grabs attention, tweet two builds the case, and tweet three lands the takeaway.",
+        "Editorial: write two short briefs of about 250 words each: one telling Creative what visuals to make and why, and one telling Growth what to focus on.",
+        "Creative: make three social media graphics: a banner image, the cover slide for an Instagram carousel, and a quote card with a key line from the article.",
+        "Creative: redesign one section of the company's actual website with notes on what changed and why.",
+        "Creative: write a short paragraph for each piece explaining your choices.",
+        "Community & Growth: plan how the content reaches people on X, Instagram, and LinkedIn.",
+        "Community & Growth: for each platform, include how often to post, when to post, and two different versions of each post.",
+        "Community & Growth: set real number goals, such as 500 likes, 50 replies, or 20 profile clicks.",
+        "Community & Growth: pitch one interactive idea, such as an AMA with the founder, meme contest, or thread challenge, and explain how you would run it."
+      ],
+      diligence: [
+        "Each member prepares a one-page diligence note before production begins.",
+        "Diligence notes should cover the company, audience, opportunity, risks, and why the protocol matters.",
+        "All three roles must complete diligence notes."
+      ],
+      companies: ["Ethena", "Hyperliquid", "Morpho", "EigenLayer", "Jito", "Across", "Or propose your own"],
+      workflow: [
+        "Everyone prepares their own one-page brief on the company the team chooses.",
+        "Editorial gives Creative the key information and framing.",
+        "Creative builds the visual content from the editorial angle.",
+        "Community & Growth decides how to ship the content to end viewers for the best exposure."
+      ],
+      expectations: [
+        "Make the drop feel coordinated across writing, visuals, and distribution.",
+        "Use specific goals and concrete platform plans.",
+        "Keep the tone polished enough to represent OBG publicly.",
+        "Show that the team understands the protocol, its audience, and why anyone should care."
+      ]
+    }
   },
   {
     id: "venture-capital",
@@ -39,6 +79,7 @@ const branches = [
     id: "engineering",
     title: "Engineering",
     intro: "Work in pairs to design, build, deploy, and document a blockchain-based engineering solution.",
+    themeClass: "engineering-hero",
     partners: ["Kellen + Kevin", "Matt + Bardia"],
     assignment: {
       title: "Blockchain Engineering Project Assignment",
@@ -164,12 +205,12 @@ function renderBranchPages() {
 
     if (branch.assignment) {
       page.innerHTML = `
-        <section class="branch-hero engineering-hero">
+        <section class="branch-hero ${branch.themeClass || ""}">
           <p class="eyebrow">Branch Track</p>
           <h2 id="${branch.id}-title">${branch.title}</h2>
           <p>${branch.intro}</p>
-          <div class="partner-row" aria-label="Engineering project pairs">
-            ${branch.partners.map((partner) => `<span>${partner}</span>`).join("")}
+          <div class="partner-row" aria-label="${branch.title} groups">
+            ${(branch.partners || branch.roles || []).map((item) => `<span>${item}</span>`).join("")}
           </div>
         </section>
 
@@ -181,41 +222,69 @@ function renderBranchPages() {
           <p class="detail-lead">${branch.assignment.overview}</p>
           <div class="detail-grid">
             <article>
-              <h3>Core Requirements</h3>
+              <h3>${branch.assignment.requirementsTitle || "Core Requirements"}</h3>
               ${listMarkup(branch.assignment.requirements)}
             </article>
-            <article>
-              <h3>README Requirements</h3>
-              ${listMarkup(branch.assignment.readme)}
-            </article>
+            ${
+              branch.assignment.readme
+                ? `<article>
+                    <h3>README Requirements</h3>
+                    ${listMarkup(branch.assignment.readme)}
+                  </article>`
+                : ""
+            }
+            ${
+              branch.assignment.diligence
+                ? `<article>
+                    <h3>Diligence Notes</h3>
+                    ${listMarkup(branch.assignment.diligence)}
+                  </article>`
+                : ""
+            }
             <article>
               <h3>Project Expectations</h3>
               ${listMarkup(branch.assignment.expectations)}
             </article>
-            <article>
-              <h3>Submission</h3>
-              ${listMarkup(branch.assignment.submission)}
-            </article>
+            ${
+              branch.assignment.submission
+                ? `<article>
+                    <h3>Submission</h3>
+                    ${listMarkup(branch.assignment.submission)}
+                  </article>`
+                : ""
+            }
           </div>
         </section>
 
         <section class="idea-section">
-          <p class="eyebrow">Sample Project Ideas</p>
-          <h2>Pick one of these or create your own</h2>
+          <p class="eyebrow">${branch.assignment.ideas ? "Sample Project Ideas" : "Company Suggestions"}</p>
+          <h2>${branch.assignment.ideas ? "Pick one of these or create your own" : "Pick one protocol or propose your own"}</h2>
           <div class="idea-grid">
-            ${branch.assignment.ideas
-              .map((idea) => {
-                const [title, description] = idea.split(": ");
+            ${(branch.assignment.ideas || branch.assignment.companies)
+              .map((item) => {
+                const [title, description] = item.split(": ");
                 return `
                   <article class="idea-card">
                     <h3>${title}</h3>
-                    <p>${description}</p>
+                    <p>${description || "Suggested protocol for the content drop."}</p>
                   </article>
                 `;
               })
               .join("")}
           </div>
         </section>
+
+        ${
+          branch.assignment.workflow
+            ? `<section class="assignment-detail">
+                <p class="eyebrow">Workflow</p>
+                <h2>How the team should work</h2>
+                <div class="workflow-list">
+                  ${branch.assignment.workflow.map((step, index) => `<article><span>${index + 1}</span><p>${step}</p></article>`).join("")}
+                </div>
+              </section>`
+            : ""
+        }
 
         <section class="branch-grid" aria-label="${branch.title} assignment checkpoints">
           ${deadlines
