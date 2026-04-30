@@ -43,10 +43,13 @@ const branches = [
 ];
 
 const todoStorageKey = "obg-education-todos";
+const retiredDefaultTodoTexts = [
+  "Collect branch assignment explanations",
+  "Confirm Week 5 submission format",
+  "Remind students about idea deadline"
+];
 const defaultTodos = [
-  { id: crypto.randomUUID(), text: "Collect branch assignment explanations", branch: "All Branches", done: false },
-  { id: crypto.randomUUID(), text: "Confirm Week 5 submission format", branch: "All Branches", done: false },
-  { id: crypto.randomUUID(), text: "Remind students about idea deadline", branch: "All Branches", done: false }
+  { id: crypto.randomUUID(), text: "Schedule 3 networking chats", branch: "All Branches", done: false }
 ];
 
 const formatNumber = (number) => String(number).padStart(2, "0");
@@ -143,7 +146,17 @@ function getTodos() {
   }
 
   try {
-    return JSON.parse(stored);
+    const todos = JSON.parse(stored);
+    const hasOnlyRetiredDefaults =
+      todos.length === retiredDefaultTodoTexts.length &&
+      todos.every((todo) => retiredDefaultTodoTexts.includes(todo.text));
+
+    if (hasOnlyRetiredDefaults) {
+      localStorage.setItem(todoStorageKey, JSON.stringify(defaultTodos));
+      return defaultTodos;
+    }
+
+    return todos;
   } catch {
     localStorage.setItem(todoStorageKey, JSON.stringify(defaultTodos));
     return defaultTodos;
