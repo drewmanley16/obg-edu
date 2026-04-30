@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OBG Education Assignment Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Oregon Blockchain Group</p>
+        <h1>Education Course Tracker</h1>
+      </div>
+      <nav class="tabs" aria-label="Branch pages">
+        <button class="tab active" data-tab="home">Home</button>
+        <button class="tab" data-tab="marketing">Marketing</button>
+        <button class="tab" data-tab="venture-capital">Venture Capital</button>
+        <button class="tab" data-tab="research">Research</button>
+        <button class="tab" data-tab="engineering">Engineering</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="page active-page" aria-labelledby="home-title">
+        <section class="countdown-panel">
+          <div>
+            <p class="eyebrow">Next Deadline</p>
+            <h2 id="home-title">Idea Submission</h2>
+            <p class="deadline-copy" id="next-deadline-copy">Wednesday, May 6, 2026</p>
+          </div>
+          <div class="countdown" aria-live="polite">
+            <div>
+              <strong id="days">00</strong>
+              <span>Days</span>
+            </div>
+            <div>
+              <strong id="hours">00</strong>
+              <span>Hours</span>
+            </div>
+            <div>
+              <strong id="minutes">00</strong>
+              <span>Minutes</span>
+            </div>
+            <div>
+              <strong id="seconds">00</strong>
+              <span>Seconds</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="timeline-section" aria-labelledby="timeline-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Week 5 Sprint</p>
+              <h2 id="timeline-title">Course Timeline</h2>
+            </div>
+            <p id="timeline-position">Loading timeline position...</p>
+          </div>
+          <div class="timeline-track" aria-hidden="true">
+            <div class="timeline-progress" id="timeline-progress"></div>
+          </div>
+          <div class="milestones" id="milestones"></div>
+        </section>
+
+        <section class="todo-section" aria-labelledby="todo-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Shared Updates</p>
+              <h2 id="todo-title">Other Todos</h2>
+            </div>
+          </div>
+          <form class="todo-form" id="todo-form">
+            <input id="todo-input" type="text" placeholder="Add a course todo..." autocomplete="off" />
+            <select id="todo-branch" aria-label="Todo branch">
+              <option value="All Branches">All Branches</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Venture Capital">Venture Capital</option>
+              <option value="Research">Research</option>
+              <option value="Engineering">Engineering</option>
+            </select>
+            <button type="submit">Add</button>
+          </form>
+          <ul class="todo-list" id="todo-list"></ul>
+        </section>
+      </section>
+
+      <section id="marketing" class="page branch-page" aria-labelledby="marketing-title"></section>
+      <section id="venture-capital" class="page branch-page" aria-labelledby="venture-capital-title"></section>
+      <section id="research" class="page branch-page" aria-labelledby="research-title"></section>
+      <section id="engineering" class="page branch-page" aria-labelledby="engineering-title"></section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
