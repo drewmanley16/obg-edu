@@ -73,7 +73,86 @@ const branches = [
   {
     id: "research",
     title: "Research",
-    intro: "Assignment details for the Research branch will live here once you send them over."
+    intro:
+      "Build an Artemis dashboard and write a data-backed research report explaining a major crypto protocol, its importance, and its biggest risk.",
+    themeClass: "research-hero",
+    projects: [
+      {
+        protocol: "AAVE",
+        token: "AAVE",
+        sector: "Lending & Borrowing Sector",
+        team: "Dheer + Katrina",
+        objective:
+          "Build an Artemis dashboard tracking Aave's on-chain activity and write a 3-page research report interpreting what the data shows. By the end, you should be able to explain what Aave is, why it matters, and what its biggest risk is, backed entirely by data.",
+        tools: ["Artemis dashboard", "Crypto news sources: The Block, Blockworks, Decrypt, Galaxy, etc."],
+        dashboard: [
+          "Aave token price over time",
+          "TVL over time",
+          "Total borrows outstanding",
+          "Active users over time",
+          "2 metrics of your choice that you can defend as meaningful",
+          "Valuation multiple of your choice"
+        ],
+        report: [
+          "Page 1 - What is Aave: explain what a crypto lending protocol is in plain English, what problem Aave solves, who uses it, and why it is the dominant protocol in its sector. No jargon without explanation.",
+          "Page 2 - What the Data Shows: interpret your dashboard. Do not just describe the charts; explain what they mean. Identify the three most important trends in your data. Find at least two specific dates or events visible in the data and explain what caused them.",
+          "Page 3 - Risk and Open Questions: identify the single biggest risk to Aave. Explain the mechanism of that risk in simple terms. Find at least one real event that illustrates it, with the Kelp DAO incident in April as a starting point. End with one research question you would investigate if joining the full research program."
+        ],
+        startingPoints: [
+          "Aave documentation at aave.com",
+          "The FTX collapse and its effect on Aave: November 2022",
+          "The USDC depeg and its effect on Aave: March 2023",
+          "The CRV bad debt incident: November 2022",
+          "Kelp DAO incident: April 2026"
+        ],
+        requirements: [
+          "Dashboard must have a minimum of 7 charts.",
+          "Every chart must have a clean title and legible date range.",
+          "Screenshots of the dashboard must be submitted alongside the writeup.",
+          "Every claim in the writeup must be supported by data.",
+          "No chart should appear in the writeup without being interpreted in at least one sentence.",
+          "Report must be 3 or more pages.",
+          "Prepare a 5-minute presentation to OBG."
+        ]
+      },
+      {
+        protocol: "HYPERLIQUID",
+        token: "HYPE",
+        sector: "Perps Sector",
+        team: "Fatima + Nikita",
+        objective:
+          "Build an Artemis dashboard tracking Hyperliquid's on-chain activity and write a 3-page research report interpreting what the data shows. By the end, you should be able to explain what Hyperliquid is, why it matters, and what its biggest risk is, backed entirely by data.",
+        tools: ["Artemis dashboard + data", "Crypto news sources: The Block, Blockworks, Decrypt, Galaxy"],
+        dashboard: [
+          "HYPE token price over time",
+          "Daily trading volume",
+          "Active users over time",
+          "Total open interest",
+          "2 metrics of your choice that you can defend as meaningful",
+          "Valuation multiple of your choice"
+        ],
+        report: [
+          "Page 1 - What is Hyperliquid: explain what a perpetual futures exchange is in plain English, what problem Hyperliquid solves, who uses it, and why it has grown. No jargon without explanation.",
+          "Page 2 - What the Data Shows: interpret your dashboard. Do not just describe the charts; explain what they mean. Identify the three most important trends in your data. Find at least two specific dates or events visible in the data and explain what caused them.",
+          "Page 3 - Risk and Open Questions: identify the single biggest risk to Hyperliquid. Explain the mechanism of that risk in simple terms. Find at least one real event that illustrates it, with the JELLY incident in March 2025 as a starting point. End with one research question you would investigate if joining the full research program."
+        ],
+        startingPoints: [
+          "Hyperliquid whitepaper and documentation at hyperliquid.xyz",
+          "The HYPE airdrop: December 2024",
+          "The JELLY incident: March 2025",
+          "Announcement of HIP-4 and development of HIP-3"
+        ],
+        requirements: [
+          "Dashboard must have a minimum of 7 charts.",
+          "Every chart must have a clean title and legible date range.",
+          "Screenshots of the dashboard must be submitted alongside the writeup.",
+          "Every claim in the writeup must be supported by data.",
+          "No chart should appear in the writeup without being interpreted in at least one sentence.",
+          "Report must be 3 or more pages.",
+          "Prepare a 5-minute presentation to OBG."
+        ]
+      }
+    ]
   },
   {
     id: "engineering",
@@ -168,6 +247,49 @@ function listMarkup(items) {
   return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 }
 
+function renderProjectBrief(project) {
+  return `
+    <article class="project-brief">
+      <div class="project-heading">
+        <div>
+          <p class="eyebrow">${project.sector}</p>
+          <h2>${project.protocol}</h2>
+          <p>${project.objective}</p>
+        </div>
+        <div class="token-card">
+          <span>Token</span>
+          <strong>${project.token}</strong>
+          <small>${project.team}</small>
+        </div>
+      </div>
+
+      <div class="research-grid">
+        <section>
+          <h3>Tools</h3>
+          ${listMarkup(project.tools)}
+        </section>
+        <section>
+          <h3>Dashboard Requirements</h3>
+          ${listMarkup(project.dashboard)}
+        </section>
+        <section>
+          <h3>3-Page Report Requirements</h3>
+          ${listMarkup(project.report)}
+        </section>
+        <section>
+          <h3>Research Starting Points</h3>
+          ${listMarkup(project.startingPoints)}
+        </section>
+      </div>
+
+      <section class="requirements-strip">
+        <h3>Final Requirements</h3>
+        ${listMarkup(project.requirements)}
+      </section>
+    </article>
+  `;
+}
+
 function renderTimeline() {
   const now = new Date();
   const start = new Date("2026-04-29T00:00:00-07:00");
@@ -202,6 +324,38 @@ function renderTimeline() {
 function renderBranchPages() {
   branches.forEach((branch) => {
     const page = document.querySelector(`#${branch.id}`);
+
+    if (branch.projects) {
+      page.innerHTML = `
+        <section class="branch-hero ${branch.themeClass || ""}">
+          <p class="eyebrow">Branch Track</p>
+          <h2 id="${branch.id}-title">${branch.title}</h2>
+          <p>${branch.intro}</p>
+          <div class="partner-row" aria-label="${branch.title} teams">
+            ${branch.projects.map((project) => `<span>${project.team}</span>`).join("")}
+          </div>
+        </section>
+
+        <section class="project-list">
+          ${branch.projects.map((project) => renderProjectBrief(project)).join("")}
+        </section>
+
+        <section class="branch-grid" aria-label="${branch.title} assignment checkpoints">
+          ${deadlines
+            .map(
+              (deadline) => `
+                <article class="assignment-card">
+                  <span class="status-pill">${deadline.title}</span>
+                  <h3>${deadline.label}</h3>
+                  <p>${deadline.summary}</p>
+                </article>
+              `
+            )
+            .join("")}
+        </section>
+      `;
+      return;
+    }
 
     if (branch.assignment) {
       page.innerHTML = `

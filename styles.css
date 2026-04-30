@@ -468,6 +468,13 @@ main {
     #ffffff;
 }
 
+.research-hero {
+  background:
+    linear-gradient(135deg, rgba(53, 103, 183, 0.14), transparent 50%),
+    linear-gradient(315deg, rgba(31, 122, 76, 0.13), transparent 44%),
+    #ffffff;
+}
+
 .partner-row {
   display: flex;
   flex-wrap: wrap;
@@ -576,6 +583,89 @@ main {
   line-height: 1.5;
 }
 
+.project-list {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.project-brief {
+  padding: clamp(20px, 4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.project-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 170px;
+  gap: 20px;
+  align-items: start;
+}
+
+.project-heading p:last-child {
+  max-width: 880px;
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.token-card {
+  display: grid;
+  gap: 8px;
+  min-height: 140px;
+  padding: 18px;
+  border-radius: 8px;
+  background:
+    linear-gradient(160deg, rgba(31, 122, 76, 0.12), rgba(53, 103, 183, 0.12)),
+    #fbfcfb;
+  border: 1px solid rgba(53, 103, 183, 0.18);
+}
+
+.token-card span,
+.token-card small {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.token-card strong {
+  color: var(--ink);
+  font-size: 2rem;
+}
+
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.research-grid section,
+.requirements-strip {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfb;
+}
+
+.research-grid ul,
+.requirements-strip ul {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.requirements-strip {
+  margin-top: 14px;
+  background: #ffffff;
+}
+
 @media (max-width: 880px) {
   .topbar,
   .section-heading {
@@ -592,7 +682,9 @@ main {
   .branch-grid,
   .milestones,
   .detail-grid,
-  .idea-grid {
+  .idea-grid,
+  .project-heading,
+  .research-grid {
     grid-template-columns: 1fr;
   }
 
