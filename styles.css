@@ -10,6 +10,8 @@
   --gold: #e0a528;
   --blue: #3567b7;
   --red: #c84d43;
+  --teal: #1c8b8f;
+  --plum: #673c8c;
   --shadow: 0 18px 45px rgba(23, 33, 29, 0.08);
 }
 
@@ -134,7 +136,9 @@ main {
 .timeline-section,
 .todo-section,
 .branch-hero,
-.branch-placeholder {
+.branch-placeholder,
+.assignment-detail,
+.idea-section {
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -157,15 +161,21 @@ main {
 
 .countdown {
   display: grid;
-  grid-template-columns: repeat(4, minmax(82px, 1fr));
-  gap: 10px;
+  grid-template-columns: 184px repeat(2, minmax(82px, 1fr));
+  gap: 12px;
+  align-items: center;
+  max-width: 470px;
 }
 
-.countdown div {
+.time-card {
   min-width: 82px;
   padding: 16px 12px;
   border-radius: 8px;
-  background: #eef6f1;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(239, 246, 241, 0.94)),
+    #eef6f1;
+  border: 1px solid rgba(31, 122, 76, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
   text-align: center;
 }
 
@@ -184,9 +194,80 @@ main {
   text-transform: uppercase;
 }
 
+.clock-face {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 184px;
+  height: 184px;
+  grid-row: span 2;
+}
+
+.clock-ring {
+  --clock-progress: 0%;
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    conic-gradient(var(--green) var(--clock-progress), rgba(31, 122, 76, 0.12) 0),
+    radial-gradient(circle at 35% 28%, rgba(224, 165, 40, 0.3), transparent 32%),
+    #eef6f1;
+  box-shadow:
+    inset 0 0 0 12px rgba(255, 255, 255, 0.78),
+    0 20px 45px rgba(23, 33, 29, 0.12);
+}
+
+.clock-ring::before,
+.clock-ring::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.clock-ring::before {
+  inset: 24px;
+  background: white;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.clock-ring::after {
+  top: 16px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--gold);
+  transform: translateX(-50%);
+}
+
+.clock-core {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  background: #ffffff;
+  text-align: center;
+}
+
+.clock-core span,
+.clock-core small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.clock-core strong {
+  color: var(--ink);
+  font-size: 3.1rem;
+}
+
 .timeline-section,
 .todo-section,
-.branch-placeholder {
+.branch-placeholder,
+.assignment-detail,
+.idea-section {
   margin-top: 18px;
   padding: clamp(20px, 4vw, 32px);
 }
@@ -373,6 +454,87 @@ main {
   line-height: 1.5;
 }
 
+.engineering-hero {
+  background:
+    linear-gradient(135deg, rgba(28, 139, 143, 0.13), transparent 54%),
+    linear-gradient(315deg, rgba(103, 60, 140, 0.12), transparent 42%),
+    #ffffff;
+}
+
+.partner-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.partner-row span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(28, 139, 143, 0.24);
+  border-radius: 999px;
+  background: rgba(28, 139, 143, 0.1);
+  color: #11666a;
+  font-weight: 800;
+}
+
+.detail-header {
+  margin-bottom: 12px;
+}
+
+.detail-lead {
+  max-width: 900px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.detail-grid,
+.idea-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.detail-grid article,
+.idea-card {
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfb;
+}
+
+.detail-grid ul {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.idea-section h2 {
+  max-width: 700px;
+}
+
+.idea-card {
+  background: white;
+}
+
+.idea-card h3 {
+  color: var(--green-dark);
+}
+
+.idea-card p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 @media (max-width: 880px) {
   .topbar,
   .section-heading {
@@ -387,13 +549,22 @@ main {
   .countdown-panel,
   .todo-form,
   .branch-grid,
-  .milestones {
+  .milestones,
+  .detail-grid,
+  .idea-grid {
     grid-template-columns: 1fr;
   }
 
   .countdown {
     width: 100%;
+    max-width: none;
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .clock-face {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    justify-self: center;
   }
 
   .section-heading p:last-child {
@@ -412,5 +583,10 @@ main {
 
   .countdown {
     grid-template-columns: 1fr;
+  }
+
+  .clock-face {
+    width: 164px;
+    height: 164px;
   }
 }

@@ -38,7 +38,46 @@ const branches = [
   {
     id: "engineering",
     title: "Engineering",
-    intro: "Assignment details for the Engineering branch will live here once you send them over."
+    intro: "Work in pairs to design, build, deploy, and document a blockchain-based engineering solution.",
+    partners: ["Kellen + Kevin", "Matt + Bardia"],
+    assignment: {
+      title: "Blockchain Engineering Project Assignment",
+      overview:
+        "This is a duo project where you and a partner will design, build, and document a blockchain-based engineering solution. The goal is to combine smart contract development with real-world engineering thinking. Focus on building something that solves a practical problem, not just a basic demo.",
+      requirements: [
+        "Build and deploy a smart contract.",
+        "Any ecosystem is allowed, including Ethereum, Solana, Base, or another chain.",
+        "Your project must be related to engineering: systems, infrastructure, data, automation, or a similar practical area.",
+        "Use proper Git workflows with feature branches, meaningful commits, and at least a few pull requests.",
+        "Submit a GitHub repository with a well-written README."
+      ],
+      readme: [
+        "Project overview: what problem are you solving, and why does it matter?",
+        "Technical architecture: what technologies are used, and how does the system flow work?",
+        "Smart contract explanation: what does your contract do, and what are the key functions and logic?",
+        "Setup instructions: how to run your project locally and interact with the contract.",
+        "Team contributions: who worked on what."
+      ],
+      expectations: [
+        "Show clear engineering thinking.",
+        "Demonstrate real use case potential.",
+        "Have clean, readable code.",
+        "Be easy to understand from the README alone."
+      ],
+      ideas: [
+        "Decentralized Supply Chain Tracker: track parts or goods across stages with on-chain verification.",
+        "Equipment Usage Logger: record and verify usage of shared machines.",
+        "Energy Tracking + Incentives: log energy usage and reward efficient behavior with tokens.",
+        "File Verification System: hash files and store proofs on-chain for integrity verification.",
+        "Maintenance Log System: create immutable records for machine or service maintenance.",
+        "IoT + Blockchain Integration: simulate sensor data and store verified events on-chain."
+      ],
+      submission: [
+        "Submit a GitHub repo link.",
+        "Make sure the project runs or is clearly demoable.",
+        "Make sure the README is complete and easy to follow."
+      ]
+    }
   }
 ];
 
@@ -70,10 +109,22 @@ function updateCountdown() {
 
   document.querySelector("#home-title").textContent = nextDeadline.title;
   document.querySelector("#next-deadline-copy").textContent = nextDeadline.label;
+  document.querySelector("#clock-days").textContent = formatNumber(days);
   document.querySelector("#days").textContent = formatNumber(days);
   document.querySelector("#hours").textContent = formatNumber(hours);
   document.querySelector("#minutes").textContent = formatNumber(minutes);
   document.querySelector("#seconds").textContent = formatNumber(seconds);
+
+  const previousDeadline = [...deadlines].reverse().find((deadline) => deadline.date < now);
+  const startDate = previousDeadline?.date || new Date("2026-04-29T00:00:00-07:00");
+  const totalWindow = nextDeadline.date - startDate;
+  const elapsed = now - startDate;
+  const ringProgress = Math.min(100, Math.max(0, (elapsed / totalWindow) * 100));
+  document.querySelector("#clock-ring").style.setProperty("--clock-progress", `${ringProgress}%`);
+}
+
+function listMarkup(items) {
+  return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 }
 
 function renderTimeline() {
@@ -110,6 +161,79 @@ function renderTimeline() {
 function renderBranchPages() {
   branches.forEach((branch) => {
     const page = document.querySelector(`#${branch.id}`);
+
+    if (branch.assignment) {
+      page.innerHTML = `
+        <section class="branch-hero engineering-hero">
+          <p class="eyebrow">Branch Track</p>
+          <h2 id="${branch.id}-title">${branch.title}</h2>
+          <p>${branch.intro}</p>
+          <div class="partner-row" aria-label="Engineering project pairs">
+            ${branch.partners.map((partner) => `<span>${partner}</span>`).join("")}
+          </div>
+        </section>
+
+        <section class="assignment-detail">
+          <div class="detail-header">
+            <p class="eyebrow">Assignment</p>
+            <h2>${branch.assignment.title}</h2>
+          </div>
+          <p class="detail-lead">${branch.assignment.overview}</p>
+          <div class="detail-grid">
+            <article>
+              <h3>Core Requirements</h3>
+              ${listMarkup(branch.assignment.requirements)}
+            </article>
+            <article>
+              <h3>README Requirements</h3>
+              ${listMarkup(branch.assignment.readme)}
+            </article>
+            <article>
+              <h3>Project Expectations</h3>
+              ${listMarkup(branch.assignment.expectations)}
+            </article>
+            <article>
+              <h3>Submission</h3>
+              ${listMarkup(branch.assignment.submission)}
+            </article>
+          </div>
+        </section>
+
+        <section class="idea-section">
+          <p class="eyebrow">Sample Project Ideas</p>
+          <h2>Pick one of these or create your own</h2>
+          <div class="idea-grid">
+            ${branch.assignment.ideas
+              .map((idea) => {
+                const [title, description] = idea.split(": ");
+                return `
+                  <article class="idea-card">
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                  </article>
+                `;
+              })
+              .join("")}
+          </div>
+        </section>
+
+        <section class="branch-grid" aria-label="${branch.title} assignment checkpoints">
+          ${deadlines
+            .map(
+              (deadline) => `
+                <article class="assignment-card">
+                  <span class="status-pill">${deadline.title}</span>
+                  <h3>${deadline.label}</h3>
+                  <p>${deadline.summary}</p>
+                </article>
+              `
+            )
+            .join("")}
+        </section>
+      `;
+      return;
+    }
+
     page.innerHTML = `
       <section class="branch-hero">
         <p class="eyebrow">Branch Track</p>
